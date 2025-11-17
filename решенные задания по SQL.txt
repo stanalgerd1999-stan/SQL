@@ -1,0 +1,79 @@
+Задание 6
+Текст задания
+Для каждого производителя, выпускающего ПК-блокноты c объёмом жесткого диска не менее 10 Гбайт, найти скорости таких ПК-блокнотов. Вывод: производитель, скорость.
+Решение:
+SQL запрос
+Select Distinct Product.maker, Laptop.speed
+From Product, Laptop
+Where Product.model=Laptop.model AND Laptop.hd >= 10
+Задание 7
+Текст задания
+Найдите номера моделей и цены всех имеющихся в продаже продуктов (любого типа) производителя B (латинская буква).
+Решение:
+SQL запрос
+SELECT DISTINCT Product.model, PC.price
+FROM Product JOIN PC ON Product.model = PC.model WHERE maker = 'B'
+UNION
+SELECT DISTINCT Product.model, Laptop.price
+FROM Product JOIN Laptop ON Product.model=Laptop.model WHERE maker='B'
+UNION
+SELECT DISTINCT Product.model, Printer.price
+FROM Product JOIN Printer ON Product.model=Printer.model WHERE maker='B'
+Задание 8
+Текст задания
+Найдите производителя, выпускающего ПК, но не ПК-блокноты.
+Решение:
+SQL запрос
+SELECT DISTINCT maker
+FROM Product
+WHERE type = 'PC'
+EXCEPT
+SELECT DISTINCT product.maker
+FROM Product
+Where type = 'Laptop'
+Задание 9
+Текст задания 
+Найдите производителей ПК с процессором не менее 450 Мгц. Вывести: Maker
+SQL запрос
+SELECT DISTINCT product.maker
+FROM product, pc
+where product.model  = pc.model and pc.speed >= 450
+Задание 10
+Текст задания 
+Найдите модели принтеров, имеющих самую высокую цену. Вывести: model, price
+SQL запрос
+SELECT model, price
+FROM Printer
+WHERE price= (select MAX(price)from Printer)
+Задание 11
+Текст задания
+Найдите среднюю скорость ПК.
+SQL запрос
+SELECT AVG(speed) AS AVG_speed FROM PC
+Задание 12
+Текст задания
+Найдите среднюю скорость ПК-блокнотов, цена которых превышает 1000 дол.
+SQL запрос
+SELECT AVG(speed)  as AVG_speed
+From Laptop
+Where price>1000
+Задание 13
+Текст задания
+Найдите среднюю скорость ПК, выпущенных производителем A.
+SQL запрос
+SELECT AVG(pc.speed)  as Avg_speed
+FROM pc, product
+WHERE pc.model = product.model AND product.maker ='A'
+Задание 14
+Текст задания
+Найдите класс, имя и страну для кораблей из таблицы Ships, имеющих не менее 10 орудий.
+SQL запрос
+SELECT s.class, s.name, c.country
+FROM ships s
+LEFT JOIN classes c ON s.class = c.class
+WHERE c.numGuns >= 10
+Задание 15
+Текст задания
+Найдите размеры жестких дисков, совпадающих у двух и более PC. Вывести: HD
+SQL запрос
+SELECT hd FROM pc GROUP BY (hd) HAVING COUNT(model) >= 2
